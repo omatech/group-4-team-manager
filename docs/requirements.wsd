@@ -1,0 +1,38 @@
+@startuml
+  title Gestión de horas
+  abstract class User
+  class Employee
+  class Customer
+  class Reviewer
+  class TimeReport
+  abstract class Entry {
+    date
+    hours
+  }
+  class Project
+  class Company
+  class Invoice {
+    assumed hours
+    agreed hours
+  }
+
+  class InvoiceEntry
+  class WokerEntry
+  Project--*Invoice
+  Customer-->Company
+  Company-->Project
+  Company..>Reviewer
+
+  Project--*TimeReport
+  TimeReport--*Entry
+  Project "many" *--* "many" Employee
+  Project--*Entry
+  Invoice--*Entry
+  AssumedEntry..|>Entry
+  InvoiceEntry..|>Entry
+  WokerEntry..|>Entry
+  User..|>Reviewer
+  User..|>Employee
+  Employee--*Entry
+
+@enduml
