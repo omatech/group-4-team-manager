@@ -1,0 +1,69 @@
+@startuml
+left to right direction
+
+actor User
+actor Employee
+actor FinancialManager
+actor ProjectManager
+actor Time
+actor UserManager
+Employee --|> User
+FinancialManager -|> Employee
+ProjectManager -|> Employee
+UserManager -|> Employee
+
+package AutomatedActions{
+    Time --> (Get Bizneo data)
+    Time --> (Send hours email)
+}
+
+package UserUseCases {
+    User --> (Login)
+    User --> (Logout)
+}
+
+package EntryUseCases {
+    Employee --> (Create Employee Entry)
+    ProjectManager --> (Create Assumed Entry)
+    Employee --> (Update Entry)
+    Employee --> (Delete Entry)
+}
+
+package CompanyUseCases {
+    FinancialManager --> (Create Company)
+    FinancialManager --> (Update Company)
+    FinancialManager --> (Delete Company)
+}
+
+package ProjectUseCases {
+    FinancialManager --> (Create project)
+    (Create project) "<<Include>>" ..>  (Create Company)
+    FinancialManager --> (Update project)
+    FinancialManager --> (Delete project)
+}
+
+package HostingUseCases {
+    FinancialManager --> (Create Hosting)
+    FinancialManager --> (Update Hosting)
+    FinancialManager --> (Delete Hosting)
+}
+
+package InvoiceUseCases {
+    FinancialManager --> (Create Invoice)
+    (Create Invoice) "<<Include>>" ..>  (Create project)
+    FinancialManager --> (Create Rectifying Invoice)
+    (Create Rectifying Invoice) "<<Include>>" ..>  (Create Invoice)
+    FinancialManager --> (Create Hosting Invoice)
+    (Create Hosting Invoice) "<<Include>>" ..>  (Create Hosting)
+}
+
+package FinancialManagerUseCases {
+    UserManager --> (Create Employee)
+    UserManager --> (Update Employee)
+    UserManager --> (Delete Employee)
+    UserManager --> (Create ExternalReviewer)
+    UserManager --> (Update ExternalReviewer)
+    UserManager --> (Delete ExternalReviewer)
+}
+
+@enduml
